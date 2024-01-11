@@ -25,6 +25,7 @@ public class StringOps {
         
     }
 
+    //takes a (valid) string as input and return the same string with upper case vowels and lower case evertything else
     public static String capVowelsLowRest (String string) {
         String newStr = "";
         for(int i=0 ; i<string.length() ; i++) {
@@ -44,15 +45,22 @@ public class StringOps {
         return newStr;
     }
 
+    //return true if a given char is a vowel and false otherwise
     public static boolean isVowel(char ch) {
         String vowels = "aeiouAEIOU";
         return vowels.indexOf(ch) != -1;
     }
 
+    // takes a (valid) string as input and return the same string without spaces and all lower case
+    // except for the first letter of each word from the second word (incusive) and on
     public static String camelCase (String string) {
         String newStr = "";
-        indexOfSpaces(string);
+        //calling the indexOfSpaces() function
+        boolean[] space_indexes = indexOfSpaces(string);
+        //calling the lowerCase() funtion (that i created)
         string = lowerCase(string);
+
+        //going through the string char by char and mutating it according to the requirments
         for(int i=0 ; i<string.length() ; i++) {
             if(!space_indexes[i]) {
                 if(i==0)
@@ -68,16 +76,20 @@ public class StringOps {
         return newStr;
     }
 
-    static boolean[] space_indexes = new boolean[1000000];
-    public static void indexOfSpaces(String str) {
+
+    //takes a (valid) string as input and return a boolean array that hold true if the corresponding index in the given string is a space
+    public static boolean[] indexOfSpaces(String str) {
+        boolean[] space_indexes = new boolean[str.length()];
         for(int i=0 ; i<space_indexes.length ; i++)
             space_indexes[i] = false;
         for(int i=0 ; i<str.length() ; i++){
             if(str.charAt(i) == ' ')
                 space_indexes[i] = true;
         }
+        return space_indexes;
     }
 
+    //take a (valid) string as input and return the same string with only lower cases letters
     public static String lowerCase(String str) {
         String newStr = "";
         for(int i=0 ; i<str.length() ; i++)
@@ -88,13 +100,16 @@ public class StringOps {
         return newStr;
     }
 
+    //takes a (valid) string and a char as input and return the indexes of the string in which the char appears
     public static int[] allIndexOf (String string, char chr) {
         int counter = 0;
+        //checking how many times chr appears in string
         for(int i=0 ; i<string.length() ; i++) {
             if(string.charAt(i)==chr)
                 counter++;
         }
         int j=0;
+        //declaaring an array to hold the wanted indexes
         int[] chrIndex = new int[counter];
         for(int i=0 ; i<string.length() ; i++) {
             if(string.charAt(i)==chr) {
